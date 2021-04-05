@@ -39,3 +39,4 @@ if [[ "$s1" == "$s2" ]]; then echo "this works"; fi
 if [[ "$s1" == "hi" ]]; then echo "does this work?"; fi
 s3="true"
 if [[ "$s3" == "true" ]]; then echo "how bout now"; fi
+if [[ "$s3" == "$temp" ]]; then echo "this on the other hand"; fi
