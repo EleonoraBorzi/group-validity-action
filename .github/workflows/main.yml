@@ -17,6 +17,9 @@ jobs:
       - name: Get file added in the pullrequest
         id: file_changes
         uses: trilom/file-changes-action@v1.2.3
+      - run: | 
+          echo $baseFolder
+          echo $maxCollaborationTimes
       - uses: EleonoraBorzis/group-validity-action@python-script
         with: 
           github-token: ${{ secrets.GITHUB_TOKEN }}
