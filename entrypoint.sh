@@ -11,6 +11,8 @@ echo $json | jq ".student_submission" | echo
 echo $json | jq ".report" | echo
 echo $json >> test.json
 cat test.json | jq "."
+cat test.json | jq ".report"
+cat test.json | jq ".student_submission"
 echo "----------------------"
 echo {"ett":"1a", "two":"2nd"}
 echo '{"ett":"1a", "two":"2nd"}'
