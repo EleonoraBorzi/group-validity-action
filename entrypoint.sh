@@ -19,7 +19,8 @@ echo '{"ett":"1a", "two":"2nd"}'
 echo '{"ett":"1a", "two":"2nd"}' | jq ".ett"
 echo {"ett":"1a", "two":"2nd"} | jq ".ett"
 
-echo$(jq -r '.student_submission' <<< "$githubjson")
+echo $(cat output.json | jq '.student_submission')
+echo $(cat output.json | jq ".student_submission")
 
-if [[ $(cat output.json | jq '.student_submission') == "true" ]]; then echo "sant"; exit 1; else echo "falskt"; fi
+if [[ $(cat output.json | jq ".student_submission") == "true" ]]; then echo "sant"; exit 1; else echo "falskt"; fi
 
