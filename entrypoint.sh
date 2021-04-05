@@ -6,7 +6,9 @@ json="${json//'%'/'%25'}"
 json="${json//$'\n'/'%0A'}"
 json="${json//$'\r'/'%0D'}"
 
-echo $json | jq -r '.student_submission' | echo
+echo $json | jq -r ".student_submission" | echo
+echo $json | jq ".student_submission" | echo
+echo $json | jq ".report" | echo
 
 if [[ $(echo $json | jq -r '.student_submission' | echo) == "true" ]]; then echo "sant"; exit 1; else echo "falskt"; fi
 
