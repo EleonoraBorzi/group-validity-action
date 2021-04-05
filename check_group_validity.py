@@ -214,7 +214,7 @@ def main() -> "no return":
         is_student_submission = True
         folder_name = readme_list[0][-2]
         id_list = extract_and_sort_names(readme_list[0][-2]) # There is only one readme, and the ID:s should be in the immediate parent folder name.
-        is_valid = readme_is_valid(id_list, head_path + "/".join(readme_list[0]))   
+        is_valid = readme_is_valid(id_list, head_path + "/" + "/".join(readme_list[0]))   
         if is_valid:
             report +=  "The ID:s constituting the folder name matched with the email addresses in the README file.\n"
             valid_readme = True
