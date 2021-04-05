@@ -200,6 +200,7 @@ def main() -> "no return":
     #with open(path, 'r') as myfile:
     #  data=myfile.read()
     path = sys.argv[2]
+    print(path)
     with open(path, 'r') as myfile:
       payload=myfile.read()
     #payload = sys.argv[2]
