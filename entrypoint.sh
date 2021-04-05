@@ -32,3 +32,10 @@ if [[ "true" == "true" ]]; then echo "sant6"; else echo "falskt6"; fi
 temp=$(cat output.json | jq '.student_submission')
 echo $temp
 if [[ "$temp" == "true" ]]; then echo "sant7"; else echo "falskt7"; fi
+
+s1="hi"
+s2="hi"
+if [[ "$s1" == "$s2" ]]
+then
+  echo "this works"
+fi
