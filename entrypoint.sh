@@ -11,12 +11,16 @@ echo $json >> output.json
 if [[ $(cat output.json | jq ".student_submission") == "\"true\"" ]]
 then 
   if [[ $(cat output.json | jq ".ids_match") == "\"false\"" ]]
-  exit 1
+  then
+    exit 1
+  fi
 fi
 
 if [[ $(cat output.json | jq ".student_submission") == "\"true\"" ]]
 then 
   if [[ $(cat output.json | jq ".valid_group") == "\"false\"" ]]
-  exit 1
+  then
+    exit 1
+  fi
 fi
 
