@@ -188,6 +188,7 @@ def main() -> "no return":
     report = ""
     verdict = ""
     is_valid_pull_request = True
+    pr_number = -1
     is_student_submission = False
     valid_readme = False
     valid_group = False
@@ -201,10 +202,11 @@ def main() -> "no return":
     payload = sys.argv[2]
     try:
         main_repo, main_branch, head_repo, head_branch, pull_number = get_values_json(payload)
+        pr_number = pull_number
     except: 
         #print("::set-output name=isPullReq::" + "false")
         is_valid_pull_request = False
-        write_json_output(report, is_valid_pull_request, pull_number, is_student_submission, valid_readme, valid_group)
+        write_json_output(report, is_valid_pull_request, pr_number, is_student_submission, valid_readme, valid_group)
         return
 
     
