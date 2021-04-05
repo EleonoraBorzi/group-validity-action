@@ -6,6 +6,6 @@ json="${json//'%'/'%25'}"
 json="${json//$'\n'/'%0A'}"
 json="${json//$'\r'/'%0D'}"
 
-isItStudent = $json | jq '.student_submission'
+isItStudent= $json | jq '.student_submission'
 echo $isItStudent
 if [ ($json | jq -r '.student_submission') == "true" ]; then exit 1; fi
