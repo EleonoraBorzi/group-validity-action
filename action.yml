@@ -1,6 +1,9 @@
 name: Group Validity Action
 description: Check if the group composition follows the requirements described on https://github.com/KTH/devops-course
 inputs: 
+  github-token:
+    default: ${{ github.token }}
+    required: true
   payload: 
     description: Json payload with all the information of the pull request
     required: true
@@ -19,10 +22,6 @@ inputs:
     description: The maximum number of times the same group is allowed to work together (this includes groups of only a single person)
     default: 2
     required: true
-#  github-token:
-#    default: ${{ github.token }}
-#    required: true
-
 runs:
   using: 'docker'
   image: 'Dockerfile'
