@@ -269,7 +269,7 @@ def main() -> "no return":
     if len(verdict) == 0:
         verdict += "The group composition is allowed.\n"
     write_json_output(report + verdict, is_valid_pull_request, pull_number, is_student_submission, valid_readme, valid_group)
-    write_comment_pr(access_token, main_repo, pull_number, verdict)
+    write_comment_pr(access_token, base_repo, pr_number, report + verdict)
 
 if __name__ == "__main__":
     main()
