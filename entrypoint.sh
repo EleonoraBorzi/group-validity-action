@@ -6,13 +6,13 @@ json="${json//'%'/'%25'}"
 json="${json//$'\n'/'%0A'}"
 json="${json//$'\r'/'%0D'}"
 
-echo $json | jq -r ".student_submission" | echo
-echo $json | jq ".student_submission" | echo
-echo $json | jq ".report" | echo
-echo $json >> test.json
-cat test.json | jq "."
-cat test.json | jq ".report"
-cat test.json | jq ".student_submission"
+echo $json | jq -r ".student_submission"
+echo $json | jq ".student_submission"
+echo $json | jq ".report"
+echo $json >> output.json
+cat output.json | jq "."
+cat output.json | jq ".report"
+cat output.json | jq ".student_submission"
 echo "----------------------"
 echo {"ett":"1a", "two":"2nd"}
 echo '{"ett":"1a", "two":"2nd"}'
@@ -21,5 +21,5 @@ echo {"ett":"1a", "two":"2nd"} | jq ".ett"
 
 echo$(jq -r '.student_submission' <<< "$githubjson")
 
-if [[ $(jq -r '.student_submission' <<< "$githubjson" | echo) == "true" ]]; then echo "sant"; exit 1; else echo "falskt"; fi
+if [[ $(cat output.json | jq '.student_submission') == "true" ]]; then echo "sant"; exit 1; else echo "falskt"; fi
 
