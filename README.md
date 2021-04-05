@@ -1,10 +1,10 @@
 # validity-group-action
 
-This github action automatically checks if the group submitting a pull request to github repo satisfies the requirements. The action is implemented with Docker to make it easier to access the action without needing to clone the python script. The requirements that the action checks are:
-- The students cannot work with the same persons in a projects more than a maximum amount of times  (it also apply for working alone)
-- The group size does not exceed the maximum number of members
-- the account name in the README file of the pull request match with the name of the folder that contains the README file. For example if in the README file it is written that the accounts are a@kth.se and b@kth.se then the folder containing the README file should be "a-b".
-Below there is a code that shows how to use the action in yaml file. 
+This github action automatically checks if the group submitting a project proposal as a pull request to a github repo satisfies some requirements. The action is implemented with Docker to make it easier to access the action without needing to clone the python script. The requirements that the action checks are:
+- The students cannot work with the same persons in a projects more than some maximum amount of times (this also applies for working alone)
+- The group size does not exceed the maximum number of allowed members
+- The KTH email addresses in the README file of the pull request match with the name of the folder that contains the README file. For example if in the README file it is written that the accounts are a@kth.se and b@kth.se then the folder containing the README file should be "a-b" or "b-a".
+Below there is some code that shows how to use the action in a yaml file. 
 
 ```yaml
 name: Group validity check
@@ -35,20 +35,24 @@ jobs:
 
 ```
 The action has 6 inputs:
-- github-token: The GitHub secret token that gives access to several git functions
-- payload: The JSON payload that contains information about the pull request
-- filesAdded: A list of file added in the pull request
-- basefolder: The folder where the folders named with the accounts name are placed 
-- maxGroupSize: Maximum number of members accepted 
+- github-token: The GitHub secret token that gives access to several git functions.
+- payload: The JSON payload that contains information about the pull request.
+- filesAdded: A list of files added in the pull request.
+- basefolder: A folder which all relevant student proposal submissions will be under. This is used to limit the part of the repo considered for student project proposals.
+- maxGroupSize: Maximum number of members accepted .
 - maxCollaborationTimes: Maximum number of times two members can work together in a group.
-The inputs have a default value that corresponds the requirements from the project course https://github.com/KTH/devops-course/blob/2021/grading-criteria.md#course-automation. The action must run on pull_request_target otherwise it will not work. 
 
-The action will post a comment on the PR depending on if the requirements are met and what type of scenario the pull request is. 
-In this action there can be three scenarios:
-1. The pull request does not contain a README file. In this case, it could be a TA that created the pull request so to not interfere, the action will post the comment "There wasn't exactly one readme added under collaborations/ . This is assumed not to be a student submission." The action will not fail the pull request. 
-2. The accounts in the README and the name of the folder does not match. The following will be posted as a comment on the PR "The ID:s constituting the folder name did not match with the email addresses in the README file. If this is a student submission, please revise the pull request." The action will fail the check on the PR. 
-3.  The size of the group is not allowed. The action will fail the pull request and print the following comment "The group size is 4, but the maximum allowed group size is 3. This group is thus not allowed."
-4.  The members have worked together more than the maximum number, the following will be posted as a comment "A and B appears to have worked together 10 times, while the maximum allowed is 2. Consequently they may not work together here".
-5.  The pull request satisfied all the requirements then the following will be commented on the pull request "The ID:s constituting the folder name matched with the email addresses in the README file. The group consisting of  A and B appears to have worked together 2 times. Maximum group size allowed: 3. Maximum number of collaborations 2. The group composition is allowed. 
+The inputs have a default value that corresponds the requirements from the project course https://github.com/KTH/devops-course/blob/2021/grading-criteria.md#course-automation. 
+
+The action must run on pull_request_target otherwise it will not work. 
+
+The action will post a comment on the PR depending on if the requirements are met and what type of scenario the pull request is.  
+In this action there can be the following scenarios:
+1. The pull request is not from a fork. Then this action will end early with a pass and not do anything else.
+2. The pull request does not add exactly one README file. In this case, it could be a TA that created the pull request so to not interfere, the action will post a comment about the submission probably not being from a student. The action will then end with a pass. 
+3. The KTH mail addresses in the README and the name of the folder does not match. The action will post a comment saying that it's not valid if it's a student project proposal and will fail the check on the PR. 
+4.  The size of the group is not allowed. The action will fail the pull request and post a comment regarding this. 
+5.  The members have worked together more than the maximum number. The action will fail the pull request and post a comment regarding this. 
+6.  The pull request satisfied all the requirements. Then this action will post a comment saying this and end with a pass.
 
 
