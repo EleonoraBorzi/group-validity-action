@@ -32,9 +32,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           payload:  ${{ steps.getPayload.outputs.payload }}
           filesAdded: ${{ steps.file_changes.outputs.files_added}}
-          basefolder: $baseFolder 
-          maxGroupSize: $maxGroupSize 
-          maxCollaborationTimes: $maxCollaborationTimes 
+          basefolder: contributions/ 
+          maxGroupSize: 3 
+          maxCollaborationTimes: 2 
 
           
 
