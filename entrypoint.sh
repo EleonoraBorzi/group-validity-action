@@ -26,9 +26,9 @@ if [[ $(cat output.json | jq ".student_submission") == "true" ]]; then echo "san
 if [[ $(cat output.json | jq ".student_submission") == true ]]; then echo "sant2"; exit 1; else echo "falskt2"; fi
 if [ $(cat output.json | jq ".student_submission") = "true" ]; then echo "sant3"; exit 1; else echo "falskt3"; fi
 
-if [[ $(echo "true" | echo) == "true" ]]; then echo "sant4"; exit 1; else echo "falskt4"; fi
-if [[ $(echo "true") == "true" ]]; then echo "sant5"; exit 1; else echo "falskt5"; fi
-if [[ "true" == "true" ]]; then echo "sant6"; exit 1; else echo "falskt6"; fi
+if [[ $(echo "true" | echo) == "true" ]]; then echo "sant4"; else echo "falskt4"; fi
+if [[ $(echo "true") == "true" ]]; then echo "sant5"; else echo "falskt5"; fi
+if [[ "true" == "true" ]]; then echo "sant6"; else echo "falskt6"; fi
 temp=$(cat output.json | jq '.student_submission')
 echo $temp
-if [[ $temp == "true" ]]; then echo "sant7"; exit 1; else echo "falskt7"; fi
+if [[ $temp == "true" ]]; then echo "sant7"; else echo "falskt7"; fi
