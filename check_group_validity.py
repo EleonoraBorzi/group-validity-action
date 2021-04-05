@@ -218,7 +218,7 @@ def main() -> "no return":
     ###########################################################################
     #file_additions = sys.argv[1][1:-1].split(",")
     file_additions = sys.argv[3][1:-1].split(",")
-    print("Testing file" + file_additions)
+    print("Testing file", file_additions)
     for i, f in enumerate(file_additions):
         file_additions[i] = repair_file_path(f)
     #base_folder = sys.argv[2]
