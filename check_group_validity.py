@@ -26,21 +26,8 @@ def get_values_json(payload):
     head_repo = head_repo['full_name']
     #Extract pull request number 
     pull_number = quotes_payload['number']
-    
-    #Set all the extracted data as outputs 
-    #print("::set-output name=baseRef::" + main_branch)
-    #print("::set-output name=headRef::" + head_branch)
-    #print("::set-output name=baseRepo::" + main_repo)
-    #print("::set-output name=headRepo::" + head_repo)
-    #print("::set-output name=pullNumber::" + str(pull_number)) 
-    return main_repo, main_branch, head_repo, head_branch, pull_number
 
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
+    return main_repo, main_branch, head_repo, head_branch, pull_number
 
 def repair_file_path(file_path : str) -> str:
     ret = file_path
@@ -54,6 +41,9 @@ def repair_file_path(file_path : str) -> str:
     # This one is probably redundant.
     if len(ret) >= 1 and ret[0] == "/":
         ret = ret[1:]
+    # Remove unwanted quotes.
+    ret = ret.replace("\"", "")
+    ret = ret.replace("\'", "")
     return ret
 
 def repair_folder_path(folder_path: str) -> str:
@@ -102,13 +92,6 @@ def readme_is_valid(id_list : "list of str", readme_path : str) -> bool:
             break
     return is_valid
 
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
-##################################################################################################################
-
 # Returns the possible sorted subgroups, including the empty group as the first entry. Thus [1:] will return groups of at least one element.
 # Member inclusions can be set as list of ints. This will make it so that the index of the member inclusions list will indicate whether to include 
 # a particular member when creating subgroups or not. An int of at least 1 is required to include the member.
@@ -127,9 +110,9 @@ def subgroups_recursion(group_members: "list of str", index : int, member_inclus
 # Returns a list of tuples with the number of collaborations among the subgroups of the group members, along with which group members are part of this.
 # The subgroups considered are at least of size 2.
 # The special case of a group with a single members does not count as a subset to anything else but itself.
-def most_collaborations(base_folder : str, group_members : "list of str") -> "list of pairs (int, list of str)":
+def most_collaborations(base_folder_path : str, group_members : "list of str") -> "list of pairs (int, list of str)":
     # https://stackoverflow.com/questions/973473/getting-a-list-of-all-subdirectories-in-the-current-directory 
-    folder_lists = [x[1] for x in os.walk(base_folder) if x[1] != []]
+    folder_lists = [x[1] for x in os.walk(base_folder_path) if x[1] != []]
     folders = [item for sublist in folder_lists for item in sublist]
     
     subgroupsR = subgroups_recursion(group_members, 0)
@@ -175,7 +158,7 @@ def write_json_output(report : str, is_valid_pull_request : bool, pr_number : in
 # Expects six command line arguments in the following order: 
 # - a github access token
 # - the pull request payload as a json object
-# - paths of files that have been added on the form [file1_path,file2_path,...] or ["file1_path","file2_path","..."] . 
+# - paths of files that have been added on the form "[file1_path,file2_path,...]". 
 # - the path to the base folder, which is the folder that is to be considered root when running this script. 
 # - an int with the maximum group size,
 # - and an int with the maximum number of times the same group is allowed to work together (this includes groups of only a single person).
@@ -183,6 +166,8 @@ def write_json_output(report : str, is_valid_pull_request : bool, pr_number : in
 # For all paths specified, they should not begin with a "./" but every other folder in the path should be followed by "/" . 
 # E.g. "fol/base_folder/" . 
 # Pointing to current directory would be just the empty string "".
+# The array of file additions should not be an array of strings denoted by quotes, i.e NOT ["file1_path","file2_path","..."], 
+# but rather just a single string "[file1_path,file2_path,...]".
 # However, even if the input deviates from this it's attempted to repair it.
 def main() -> "no return":
     report = ""
@@ -193,18 +178,14 @@ def main() -> "no return":
     valid_readme = False
     valid_group = False
 
+    access_token = sys.argv[1]
     folder_name = ""
 
-
-    #path = sys.argv[1]
-    #with open(path, 'r') as myfile:
-    #  data=myfile.read()
     payload = sys.argv[2]
     try:
-        main_repo, main_branch, head_repo, head_branch, pull_number = get_values_json(payload)
+        base_repo, base_branch, head_repo, head_branch, pull_number = get_values_json(payload)
         pr_number = pull_number
     except: 
-        #print("::set-output name=isPullReq::" + "false")
         is_valid_pull_request = False
         write_json_output(report, is_valid_pull_request, pr_number, is_student_submission, valid_readme, valid_group)
         return
@@ -213,20 +194,13 @@ def main() -> "no return":
     # using an access token
     # https://<token>@github.com/owner/repo.git
     # 'http://user:password@github.com/user/project.git'
-    os.mkdir("../head")
-    repo = Repo.clone_from("https://" + sys.argv[1] + "@github.com/" + head_repo + ".git", '../head/', branch=head_branch)
-    os.system('cmd /k "cd ../head"')
-    os.system('cmd /k "ls"')
-    ###########################################################################
-    #file_additions = sys.argv[1][1:-1].split(",")
-    file_additions = sys.argv[3]
-    file_additions = file_additions[1:-1]
-    file_additions = file_additions.split(",")
-    file_additions[0] = "contributions/henke-borzi/readme.md"
+    head_path = "./head"
+    os.mkdir(head_path)
+    repo = Repo.clone_from("https://" + access_token + "@github.com/" + head_repo + ".git", head_path, branch=head_branch)
+    file_additions = sys.argv[3][1:-1].split(",")
     for i, f in enumerate(file_additions):
         file_additions[i] = repair_file_path(f)
-    #base_folder = sys.argv[2]
-    print("Testing file after ", file_additions[0])
+
     base_folder = sys.argv[4]
     base_folder = repair_folder_path(base_folder)
     base_folder_segments = base_folder.split("/")[:-1]
@@ -238,14 +212,9 @@ def main() -> "no return":
         is_student_submission = False
     else:
         is_student_submission = True
-        #print("::set-output name=folderName::" + readme_list[0][-2])
         folder_name = readme_list[0][-2]
         id_list = extract_and_sort_names(readme_list[0][-2]) # There is only one readme, and the ID:s should be in the immediate parent folder name.
-        #is_valid = readme_is_valid(id_list, "/".join(readme_list[0]))  
-        print(head_repo.split("/")[1])
-        print(readme_list[0])
-        print("/".join(readme_list[0]))
-        is_valid = readme_is_valid(id_list, "../head/" + "/".join(readme_list[0]))   
+        is_valid = readme_is_valid(id_list, head_path + "/".join(readme_list[0]))   
         if is_valid:
             report +=  "The ID:s constituting the folder name matched with the email addresses in the README file.\n"
             valid_readme = True
@@ -254,15 +223,16 @@ def main() -> "no return":
             report += "If this is a student submission, please revise the pull request.\n" 
             valid_readme = False
 
-    #print("::set-output name=report::" + report)
-    #print("::set-output name=idsMatch::" + ("true" if valid_readme else "false"))
     if not is_student_submission or not valid_readme:
         write_json_output(report, is_valid_pull_request, pull_number, is_student_submission, valid_readme, valid_group)
         return
-    ###########################################################################
+ 
+    base_path = "./base"
+    os.mkdir(base_path)
+    Repo.clone_from("https://" + access_token + "@github.com/" + base_repo + ".git", base_path, branch=base_branch)
 
     group_members = extract_and_sort_names(folder_name)
-    collaborations = most_collaborations(base_folder, group_members)
+    collaborations = most_collaborations(base_path + "/" + base_folder, group_members)
     allowed_group_size = int(sys.argv[5])
     allowed_collaboration_times = int(sys.argv[6])
 
@@ -291,9 +261,6 @@ def main() -> "no return":
     
     if len(verdict) == 0:
         verdict += "The group composition is allowed.\n"
-    #print("::set-output name=groupValidityReport::" + report + verdict)
-    #print("::set-output name=groupValidity::" + ("true" if valid_group else "false"))
-    #print(json.dumps({"report":report+verdict, "validity":("true" if valid_group else "false")}))
     write_json_output(report + verdict, is_valid_pull_request, pull_number, is_student_submission, valid_readme, valid_group)
 
 if __name__ == "__main__":
