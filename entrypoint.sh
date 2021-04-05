@@ -3,8 +3,6 @@ ls .. -a
 
 ls ../head/ -a
 
-ls ../head/group-validity-action/ -a
+ls ../head/contributions/ -a
 
-ls ../head/group-validity-action/contributions/ -a
-
-ls ../head/group-validity-action/contributions/henke-borzi/ -a
+ls ../head/contributions/henke-borzi/ -a
