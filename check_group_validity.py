@@ -44,7 +44,6 @@ def get_values_json(payload):
 
 def repair_file_path(file_path : str) -> str:
     ret = file_path
-    file_path.replace('"', '')
     # Remove unwanted prefix
     if len(ret) >= 1 and ret[0] == "/":
         ret = ret[1:]
@@ -221,10 +220,10 @@ def main() -> "no return":
     file_additions = sys.argv[3]
     file_additions = file_additions[1:-1]
     file_additions = file_additions.split(",")
+    file_additions[0] = "contributions/henke-borzi/readme.md"
     for i, f in enumerate(file_additions):
         file_additions[i] = repair_file_path(f)
     #base_folder = sys.argv[2]
-    file_additions[0] = "contributions/henke-borzi/readme.md"
     print("Testing file after ", file_additions[0])
     base_folder = sys.argv[4]
     base_folder = repair_folder_path(base_folder)
