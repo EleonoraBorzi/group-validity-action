@@ -10,5 +10,8 @@ echo $json | jq -r ".student_submission" | echo
 echo $json | jq ".student_submission" | echo
 echo $json | jq ".report" | echo
 
+echo {"ett":"1a", "two":"2nd"} | jq "."
+echo {"ett":"1a", "two":"2nd"} | jq "." | echo
+
 if [[ $(echo $json | jq -r '.student_submission' | echo) == "true" ]]; then echo "sant"; exit 1; else echo "falskt"; fi
 
