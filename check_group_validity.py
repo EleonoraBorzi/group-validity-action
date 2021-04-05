@@ -2,6 +2,7 @@ import json
 import os
 from git import Repo
 import sys
+from github import Github
   
      
 def get_values_json(payload):
@@ -171,6 +172,12 @@ def write_json_output(report : str, is_valid_pull_request : bool, pr_number : in
                       "ids_match":("true" if ids_match else "false"),
                       "valid_group":("true" if valid_group else "false")
                       }))
+#Writes comment on the pul request with the final report
+def write_comment_pr(git_token, repo, pull_number, report):
+    g = Github(GITHUB_TOKEN)
+    repo = g.get_repo(repo)
+    pr = repo.get_pull(pull_number)
+    pr.create_issue_comment(report)
 
 # Expects six command line arguments in the following order: 
 # - a github access token
@@ -215,8 +222,6 @@ def main() -> "no return":
     # 'http://user:password@github.com/user/project.git'
     os.mkdir("../head")
     repo = Repo.clone_from("https://" + sys.argv[1] + "@github.com/" + head_repo + ".git", '../head/', branch=head_branch)
-    os.system('cmd /k "cd ../head"')
-    os.system('cmd /k "ls"')
     ###########################################################################
     #file_additions = sys.argv[1][1:-1].split(",")
     file_additions = sys.argv[3]
@@ -295,6 +300,6 @@ def main() -> "no return":
     #print("::set-output name=groupValidity::" + ("true" if valid_group else "false"))
     #print(json.dumps({"report":report+verdict, "validity":("true" if valid_group else "false")}))
     write_json_output(report + verdict, is_valid_pull_request, pull_number, is_student_submission, valid_readme, valid_group)
-
+    write_comment_pr(sys.argv[1], main_repo, pull_number, verdict)
 if __name__ == "__main__":
     main()
