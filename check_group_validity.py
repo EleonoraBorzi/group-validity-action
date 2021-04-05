@@ -215,6 +215,8 @@ def main() -> "no return":
     # 'http://user:password@github.com/user/project.git'
     os.mkdir("../head")
     repo = Repo.clone_from("https://" + sys.argv[1] + "@github.com/" + head_repo + ".git", '../head/', branch=head_branch)
+    os.system('cmd /k "cd ../head"')
+    os.system('cmd /k "ls"')
     ###########################################################################
     #file_additions = sys.argv[1][1:-1].split(",")
     file_additions = sys.argv[3]
