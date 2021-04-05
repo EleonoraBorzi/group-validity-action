@@ -21,7 +21,7 @@ jobs:
           payload:  ${{ steps.getPayload.outputs.payload }}
           filesAdded: ${{ steps.file_changes.outputs.files_added}}
           basefolder: contributions/ 
-          maxGroupSize: 3 
+          maxGroupSize: 1 
           maxCollaborationTimes: 2 
 
           
