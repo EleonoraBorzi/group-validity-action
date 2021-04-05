@@ -1,6 +1,6 @@
 name: Group validity check
 on:
-  pull_request_target:
+  pull_request:
 jobs:
   build:
     runs-on: ubuntu-latest
