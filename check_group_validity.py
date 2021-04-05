@@ -44,6 +44,7 @@ def get_values_json(payload):
 
 def repair_file_path(file_path : str) -> str:
     ret = file_path
+    file_path.replace('"', '')
     # Remove unwanted prefix
     if len(ret) >= 1 and ret[0] == "/":
         ret = ret[1:]
@@ -222,6 +223,7 @@ def main() -> "no return":
     for i, f in enumerate(file_additions):
         file_additions[i] = repair_file_path(f)
     #base_folder = sys.argv[2]
+    print("Testing file after ", file_additions)
     base_folder = sys.argv[4]
     base_folder = repair_folder_path(base_folder)
     base_folder_segments = base_folder.split("/")[:-1]
