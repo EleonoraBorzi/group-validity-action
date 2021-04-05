@@ -213,7 +213,8 @@ def main() -> "no return":
     # using an access token
     # https://<token>@github.com/owner/repo.git
     # 'http://user:password@github.com/user/project.git'
-    repo = Repo.clone_from("https://" + sys.argv[1] + "@github.com/" + head_repo + ".git", '../', branch=head_branch)
+    os.mkdir("../head")
+    repo = Repo.clone_from("https://" + sys.argv[1] + "@github.com/" + head_repo + ".git", '../head/', branch=head_branch)
     ###########################################################################
     #file_additions = sys.argv[1][1:-1].split(",")
     file_additions = sys.argv[3][1:-1].split(",")
