@@ -199,7 +199,10 @@ def main() -> "no return":
     #path = sys.argv[1]
     #with open(path, 'r') as myfile:
     #  data=myfile.read()
-    payload = sys.argv[2]
+    path = sys.argv[2]
+    with open(path, 'r') as myfile:
+      payload=myfile.read()
+    #payload = sys.argv[2]
     try:
         main_repo, main_branch, head_repo, head_branch, pull_number = get_values_json(payload)
         pr_number = pull_number
