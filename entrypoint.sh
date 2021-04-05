@@ -15,5 +15,7 @@ echo '{"ett":"1a", "two":"2nd"}' | jq ".ett"
 echo '{"ett":"1a", "two":"2nd"}' >> test.json
 echo {"ett":"1a", "two":"2nd"} | jq "." | echo
 
+echo$(jq -r '.student_submission' <<< "$githubjson")
+
 if [[ $(jq -r '.student_submission' <<< "$githubjson" | echo) == "true" ]]; then echo "sant"; exit 1; else echo "falskt"; fi
 
