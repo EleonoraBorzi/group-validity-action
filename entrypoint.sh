@@ -22,7 +22,7 @@ echo {"ett":"1a", "two":"2nd"} | jq ".ett"
 echo $(cat output.json | jq '.student_submission')
 echo $(cat output.json | jq ".student_submission")
 
-if [[ $(cat output.json | jq ".student_submission") == "true" ]]; then echo "sant1"; exit 1; else echo "falskt1"; fi
+if [[ $(cat output.json | jq ".student_submission") == "\"true\"" ]]; then echo "sant1"; exit 1; else echo "falskt1"; fi
 if [[ $(cat output.json | jq ".student_submission") == true ]]; then echo "sant2"; exit 1; else echo "falskt2"; fi
 if [ $(cat output.json | jq ".student_submission") = "true" ]; then echo "sant3"; exit 1; else echo "falskt3"; fi
 
