@@ -240,7 +240,7 @@ def main() -> "no return":
         folder_name = readme_list[0][-2]
         id_list = extract_and_sort_names(readme_list[0][-2]) # There is only one readme, and the ID:s should be in the immediate parent folder name.
         #is_valid = readme_is_valid(id_list, "/".join(readme_list[0]))   
-        is_valid = readme_is_valid(id_list, "../" + head_repo.split("/")[1] + "/".join(readme_list[0]))   
+        is_valid = readme_is_valid(id_list, "../head/" + head_repo.split("/")[1] + "/".join(readme_list[0]))   
         if is_valid:
             report +=  "The ID:s constituting the folder name matched with the email addresses in the README file.\n"
             valid_readme = True
