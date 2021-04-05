@@ -6,8 +6,6 @@ json="${json//'%'/'%25'}"
 json="${json//$'\n'/'%0A'}"
 json="${json//$'\r'/'%0D'}"
 
-jq '.student_submission' $json 
-
-if(($json | jq -r '.student_submission')=="true"); then 
+if(($json >> jq -r '.student_submission')=="true"); then 
   exit 1
 fi
