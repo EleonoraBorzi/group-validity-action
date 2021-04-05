@@ -22,7 +22,9 @@ inputs:
   github-token:
     default: ${{ github.token }}
     required: true
-
+run: | 
+    echo ${{ inputs.payload }}
+    echo ${{ inputs.basefolder }}
 runs:
   using: 'docker'
   image: 'Dockerfile'
