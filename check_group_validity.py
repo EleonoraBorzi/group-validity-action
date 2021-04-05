@@ -174,6 +174,7 @@ def write_json_output(report : str, is_valid_pull_request : bool, pr_number : in
                       }))
 #Writes comment on the pul request with the final report
 def write_comment_pr(git_token, repo_name, pull_number, report):
+    print("working")
     g = Github(git_token)
     repo = g.get_repo(repo_name)
     pr = repo.get_pull(pull_number)
