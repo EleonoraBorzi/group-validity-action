@@ -216,7 +216,7 @@ def main() -> "no return":
     readme_list = extract_readme(candidates)
 
     if len(readme_list) != 1:
-        report += "There wasn't exactly one readme added under \"" + base_folder + "\" . This is assumed not to be a student submission.\n"
+        report += "There wasn't exactly one readme added under \"" + base_folder + "\" . This is assumed not to be a student project proposal.\n"
         is_student_submission = False
     else:
         is_student_submission = True
@@ -228,7 +228,7 @@ def main() -> "no return":
             valid_readme = True
         else:
             report += "The ID:s constituting the folder name did not match with the email addresses in the README file. "
-            report += "If this is a student submission, please revise the pull request.\n" 
+            report += "If this is a student project proposal, please revise the pull request.\n" 
             valid_readme = False
 
     if not is_student_submission or not valid_readme:
