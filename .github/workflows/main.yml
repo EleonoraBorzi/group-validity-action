@@ -23,11 +23,11 @@ jobs:
       - uses: EleonoraBorzis/group-validity-action@python-script
         with: 
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          payload: ${{ GITHUB_EVENT_PATH }}
+          payload: ${{ $GITHUB_EVENT_PATH }}
           filesAdded: ${{ steps.file_changes.outputs.files_added}}
-          basefolder: ${{ baseFolder }}
-          maxGroupSize: ${{ maxGroupSize }}
-          maxCollaborationTimes: ${{ maxCollaborationTimes }}
+          basefolder: ${{ $baseFolder }}
+          maxGroupSize: ${{ $maxGroupSize }}
+          maxCollaborationTimes: ${{ $maxCollaborationTimes }}
 
           
 
