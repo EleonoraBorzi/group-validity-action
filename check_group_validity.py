@@ -154,6 +154,13 @@ def write_json_output(report : str, is_valid_pull_request : bool, pr_number : in
                       "ids_match":("true" if ids_match else "false"),
                       "valid_group":("true" if valid_group else "false")
                       }))
+#Writes comment on the pul request with the final report
+def write_comment_pr(git_token, repo_name, pull_number, report):
+    g = Github(git_token)
+    repo = g.get_repo(repo_name)
+    pr = repo.get_pull(pull_number)
+    pr.create_issue_comment(report)
+
 
 # Expects six command line arguments in the following order: 
 # - a github access token
@@ -262,6 +269,7 @@ def main() -> "no return":
     if len(verdict) == 0:
         verdict += "The group composition is allowed.\n"
     write_json_output(report + verdict, is_valid_pull_request, pull_number, is_student_submission, valid_readme, valid_group)
+    write_comment_pr(access_token, main_repo, pull_number, verdict)
 
 if __name__ == "__main__":
     main()
