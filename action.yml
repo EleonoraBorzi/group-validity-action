@@ -19,9 +19,9 @@ inputs:
     description: The maximum number of times the same group is allowed to work together (this includes groups of only a single person)
     default: 2
     required: true
-#  github-token:
-#    default: ${{ github.token }}
-#    required: true
+  github-token:
+    default: ${{ github.token }}
+    required: true
 
 runs:
   using: 'docker'
