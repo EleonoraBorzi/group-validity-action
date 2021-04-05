@@ -1,18 +1,13 @@
 name: Group validity check
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   pull_request_target:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Get file added in the pullrequest
         id: file_changes
         uses: trilom/file-changes-action@v1.2.3
-      - run: | 
-          echo $baseFolder
-          echo $maxCollaborationTimes
       - id: getPayload
         run: |
           payload=$(cat $GITHUB_EVENT_PATH)
@@ -20,7 +15,6 @@ jobs:
           payload="${payload//$'\n'/'%0A'}"
           payload="${payload//$'\r'/'%0D'}"
           echo "::set-output name=payload::$payload"
-          echo ${{ steps.file_changes.outputs.files_added}}
       - uses: EleonoraBorzis/group-validity-action@python-script
         with: 
           github-token: ${{ secrets.GITHUB_TOKEN }}
