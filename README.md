@@ -1,6 +1,6 @@
 # validity-group-action
 
-This github action automatically checks if the group submitting a pull request to github repo satisfies the requirements. The requirements that the action checks are:
+This github action automatically checks if the group submitting a pull request to github repo satisfies the requirements. The action is implemented with Docker to make it easier to access the action without needing to clone the python script. The requirements that the action checks are:
 - You cannot work with the same persons in a projects more than a maximum amount of times  (it also apply for working alone)
 - The group size does not exceed the maximum number of members
 - the account name in the README file of the pull request match with the name of the folder that contains the README file. For example if in the README file it is written that the accounts are a@kth.se and b@kth.se then the folder containing the README file should be "a-b" 
@@ -49,3 +49,5 @@ In this action the scenarios there are three scenarion:
 3.  The size of the group is not allowed. The action will fail the pull request and print the following comment "The group size is 4, but the maximum allowed group size is 3. This group is thus not allowed."
 4.  The members have worked together more than the maximum number, the following will be posted as a comment "A and B appears to have worked together 10 times, while the maximum allowed is 2. Consequently they may not work together here".
 5.  The pull request satisfied all the requirements then the following will be commented on the pull request "The ID:s constituting the folder name matched with the email addresses in the README file. The group consisting of  A and B appears to have worked together 2 times. Maximum group size allowed: 3. Maximum number of collaborations 2. The group composition is allowed. 
+
+
