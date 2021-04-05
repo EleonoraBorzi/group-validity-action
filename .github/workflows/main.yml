@@ -27,12 +27,13 @@ jobs:
           payload="${payload//$'\n'/'%0A'}"
           payload="${payload//$'\r'/'%0D'}"
           echo "::set-output name=payload::$payload"
+          echo ${{ steps.file_changes.outputs.files_added}}
       - uses: EleonoraBorzis/group-validity-action@python-script
         with: 
           github-token: ${{ secrets.GITHUB_TOKEN }}
           payload:  ${{ steps.getPayload.outputs.payload }}
           filesAdded: ${{ steps.file_changes.outputs.files_added}}
-          basefolder: "contributions/" 
+          basefolder: contributions/ 
           maxGroupSize: 3 
           maxCollaborationTimes: 2 
 
