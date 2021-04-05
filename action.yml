@@ -22,7 +22,7 @@ inputs:
   github-token:
     default: ${{ github.token }}
     required: true
-run: | 
+runs: | 
     echo ${{ inputs.payload }}
     echo ${{ inputs.basefolder }}
 runs:
