@@ -243,8 +243,8 @@ def main() -> "no return":
         print(head_repo.split("/")[1])
         print(readme_list[0])
         print("/".join(readme_list[0]))
-        
-        is_valid = readme_is_valid(id_list, "../head/" + head_repo.split("/")[1] + "/".join(readme_list[0]))   
+        is_valid = readme_is_valid(id_list, "../head/" + head_repo.split("/")[1] + "/"+ readme_list[0]))
+        #is_valid = readme_is_valid(id_list, "../head/" + head_repo.split("/")[1] + "/".join(readme_list[0]))   
         if is_valid:
             report +=  "The ID:s constituting the folder name matched with the email addresses in the README file.\n"
             valid_readme = True
