@@ -28,7 +28,7 @@ jobs:
           payload="${payload//$'\r'/'%0D'}"
           echo "::set-output name=payload::$payload"
           echo ${{ steps.file_changes.outputs.files_added}}
-      - uses: EleonoraBorzis/group-validity-action@python-script
+      - uses: EleonoraBorzis/group-validity-action@Issue#8
         with: 
           github-token: ${{ secrets.GITHUB_TOKEN }}
           payload:  ${{ steps.getPayload.outputs.payload }}
