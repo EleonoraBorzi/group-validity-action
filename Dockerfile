@@ -8,6 +8,7 @@ COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
 COPY . /app
+RUN sudo apt-get install jq
 RUN chmod +x /app/entrypoint.sh
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]
