@@ -196,7 +196,6 @@ def main() -> "no return":
     except: 
         is_valid_pull_request = False
         write_json_output(report, is_valid_pull_request, pr_number, is_student_submission, valid_readme, valid_group)
-        a = 1/0
         return
 
     
@@ -235,7 +234,6 @@ def main() -> "no return":
     if not is_student_submission or not valid_readme:
         write_json_output(report, is_valid_pull_request, pull_number, is_student_submission, valid_readme, valid_group)
         write_comment_pr(access_token, base_repo, pr_number, report + verdict)
-        a = 1/0
         return
  
     base_path = "./base"
