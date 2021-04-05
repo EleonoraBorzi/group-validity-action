@@ -22,7 +22,6 @@ jobs:
           echo $maxCollaborationTimes
       - id: getPayload
         run: |
-          echo $GITHUB_EVENT_PATH
           payload=$(cat $GITHUB_EVENT_PATH)
           payload="${payload//'%'/'%25'}"
           payload="${payload//$'\n'/'%0A'}"
