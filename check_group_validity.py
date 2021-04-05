@@ -220,7 +220,7 @@ def main() -> "no return":
     #file_additions = sys.argv[1][1:-1].split(",")
     file_additions = sys.argv[3]
     file_additions = file_additions[1:-1].split(",")
-    print("Testing file", file_additions[0].replace(r'\"', ''))
+    print("Testing file" + str(file_additions[0]))
     for i, f in enumerate(file_additions):
         file_additions[i] = repair_file_path(f)
     #base_folder = sys.argv[2]
