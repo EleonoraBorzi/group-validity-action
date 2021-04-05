@@ -12,6 +12,7 @@ echo $json | jq ".report" | echo
 
 echo {"ett":"1a", "two":"2nd"}
 echo '{"ett":"1a", "two":"2nd"}' | jq ".ett"
+echo {"ett":"1a", "two":"2nd"} | jq ".ett"
 echo '{"ett":"1a", "two":"2nd"}' >> test.json
 echo {"ett":"1a", "two":"2nd"} | jq "." | echo
 
